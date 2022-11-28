@@ -1,0 +1,29 @@
+{
+  "name": "cube",
+  "version": "1.0.0",
+  "description": "WIP",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "swc src -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xxczaki/cube.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Different",
+  "bugs": {
+    "url": "https://github.com/xxczaki/cube/issues"
+  },
+  "homepage": "https://github.com/xxczaki/cube#readme",
+  "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.204",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "immer": "^9.0.16"
+  }
+}
