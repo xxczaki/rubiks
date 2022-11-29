@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "swc src -d dist"
+    "build": "swc src -d dist",
+    "test": "xo"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,8 @@
   "devDependencies": {
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.204",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "xo": "^0.53.1"
   },
   "dependencies": {
     "immer": "^9.0.16"
