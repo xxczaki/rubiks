@@ -7,7 +7,7 @@ const {LEFT, RIGHT, FRONT, BACK} = Directions;
 const {CLOCKWISE, COUNTERCLOCKWISE} = RotationType;
 
 class Cube {
-	#configuration: Configuration = DEFAULT_CONFIGURATION;
+	#configuration: Configuration;
 
 	constructor(configuration: Configuration = DEFAULT_CONFIGURATION) {
 		this.#configuration = configuration;

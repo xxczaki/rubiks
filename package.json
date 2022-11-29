@@ -1,7 +1,7 @@
 {
-  "name": "cube",
+  "name": "rubiks",
   "version": "1.0.0",
-  "description": "WIP",
+  "description": "Rubik's Cube (3×3×3) implementation in TypeScript",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xxczaki/cube.git"
+    "url": "git+https://github.com/xxczaki/rubiks.git"
   },
   "keywords": [],
   "author": "",
   "license": "Different",
   "bugs": {
-    "url": "https://github.com/xxczaki/cube/issues"
+    "url": "https://github.com/xxczaki/rubiks/issues"
   },
-  "homepage": "https://github.com/xxczaki/cube#readme",
+  "homepage": "https://github.com/xxczaki/rubiks#readme",
   "devDependencies": {
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.204",
