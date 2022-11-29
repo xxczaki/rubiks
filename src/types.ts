@@ -7,14 +7,15 @@ export enum Colors {
 	WHITE = '⬜',
 }
 
-type Row = [Colors, Colors, Colors];
+type Piece = Colors;
+type Row = [Piece, Piece, Piece];
 export type Side = [
 	Row,
 	Row,
 	Row,
 ];
 
-export type Configuration = {
+export type Sides = {
 	up: Side;
 	down: Side;
 	front: Side;

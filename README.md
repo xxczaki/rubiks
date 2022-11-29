@@ -22,18 +22,19 @@
 
 - [ ] Z axis cube transformations (up, down)
 - [ ] Solving
-- [ ] Moves history
+- [x] Moves history
 - [ ] Resetting
     - [ ] By moves history
     - [ ] By algorithms
 - [ ] Configuration validation
 - [ ] Extensive documentation with visual examples
-- [ ] Website demo
+- [x] Website demo
 - [ ] CLI demo
 - [ ] Customizable color representations
 - [ ] Performance optimization
 - [ ] Benchmarks
-- [ ] Drop `immer` for 0 dependencies
+- [x] Drop `immer` for 0 dependencies
+- [ ] Truly random scrambling (cross-platform and/or customizable)
 
 ### License
 

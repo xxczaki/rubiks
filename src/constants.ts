@@ -1,8 +1,8 @@
-import {Colors, type Configuration} from './types.js';
+import {Colors, type Sides} from './types.js';
 
 const {RED, GREEN, BLUE, ORANGE, YELLOW, WHITE} = Colors;
 
-export const DEFAULT_CONFIGURATION: Configuration = {
+export const INITIAL_STATE: Sides = {
 	up: [
 		[WHITE, WHITE, WHITE],
 		[WHITE, WHITE, WHITE],

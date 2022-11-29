@@ -1,31 +1,30 @@
 {
-  "name": "rubiks",
-  "version": "1.0.0",
-  "description": "Rubik's Cube (3×3×3) implementation in TypeScript",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "build": "swc src -d dist",
-    "test": "xo"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/xxczaki/rubiks.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "Different",
-  "bugs": {
-    "url": "https://github.com/xxczaki/rubiks/issues"
-  },
-  "homepage": "https://github.com/xxczaki/rubiks#readme",
-  "devDependencies": {
-    "@swc/cli": "^0.1.57",
-    "@swc/core": "^1.2.204",
-    "typescript": "^4.7.4",
-    "xo": "^0.53.1"
-  },
-  "dependencies": {
-    "immer": "^9.0.16"
-  }
+	"name": "rubiks",
+	"version": "1.0.0",
+	"description": "Rubik's Cube (3×3×3) implementation in TypeScript",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"build": "swc src -d dist",
+		"test": "xo"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/xxczaki/rubiks.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "Different",
+	"bugs": {
+		"url": "https://github.com/xxczaki/rubiks/issues"
+	},
+	"homepage": "https://github.com/xxczaki/rubiks#readme",
+	"devDependencies": {
+		"@swc/cli": "^0.1.57",
+		"@swc/core": "^1.2.204",
+		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/parser": "^5.45.0",
+		"eslint": "^8.28.0",
+		"typescript": "^4.7.4"
+	}
 }
