@@ -1,4 +1,4 @@
-import {Colors, type Sides} from './types.js';
+import {Colors, type ScrambleOptions, type RotationOptions, type Sides} from './types.js';
 
 const {RED, GREEN, BLUE, ORANGE, YELLOW, WHITE} = Colors;
 
@@ -33,4 +33,8 @@ export const INITIAL_STATE: Sides = {
 		[RED, RED, RED],
 		[RED, RED, RED],
 	],
+};
+
+export const DEFAULT_ROTATION_OPTIONS: RotationOptions = {
+	ignoreHistory: false,
 };

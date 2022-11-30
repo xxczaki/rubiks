@@ -1,116 +1,166 @@
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Rubiks</title>
-    </head>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Rubiks</title>
+		<style>
+			body {
+				font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+				font-size: 1rem;
+			}
+
+			button {
+				padding: .75rem;
+				appearance: none;
+				border: none;
+				border-radius: 4px;
+				transition: all .15s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+				cursor: pointer;
+			}
+
+			button:hover {
+				transform: scale(105%);
+			}
+		</style>
+	</head>
 <body>
-    <main style="display: grid; gap: 3rem">
-        <div style="display: flex; width: 100%; justify-content: center; align-items: center">
-            <div>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <span id="left" style="display: flex; flex-direction: column; transform: translate(-150%, 189%)"></span>
-                    <span id="up" style="display: flex; flex-direction: column; transform: rotate(44deg) skew(329deg, 329deg) scale3d(0.9, 0.9, 1) translate(47%, 60%)"></span>
-                    <div style="display: flex;">
-                        <span id="front" style="display: flex; flex-direction: column; transform: skew(360deg, 15deg)"></span>
-                        <span id="right" style="display: flex; flex-direction: column; transform: skew(360deg, 346deg)"></span>
-                    </div>
-                </div>
-                <span id="down" style="display: flex; flex-direction: column; transform: skew(360deg, 14deg) translateY(17%)"></span>
-            </div>
-            <span id="back" style="display: flex; flex-direction: column; transform: translate(0%, 37%)"></span>
-            <button onclick="navigator.clipboard.writeText(window.cube.emoji)" style="transform: translate(50%, -150%)">copy as emoji</button>
-        </div>
-        <div style="display: grid; justify-content: center; gap: .5rem">
-            <textarea id="history" disabled placeholder="<empty history>" style="height: 5rem; resize: none"></textarea>
-            <br/>
-            <div style="display: flex; gap: .5rem">
-                <button onclick="window.cube.moveFront(); window.repaint();">move front</button>
-                <button onclick="window.cube.moveBack(); window.repaint();">move back</button>
-                <button onclick="window.cube.moveRight(); window.repaint();">move right</button>
-                <button onclick="window.cube.moveLeft(); window.repaint();">move left</button>
-            </div>
-            <br/>
-            <div style="display: flex; gap: .5rem">
-                <button onclick="window.cube.rotateUp('clockwise'); window.repaint();">rotate up (clockwise)</button>
-                <button onclick="window.cube.rotateUp('counterclockwise'); window.repaint();">rotate up (counterclockwise)</button>
-                <button onclick="window.cube.rotateDown('clockwise'); window.repaint();">rotate down (clockwise)</button>
-                <button onclick="window.cube.rotateDown('counterclockwise'); window.repaint();">rotate down (counterclockwise)</button>
-            </div>
-            <div style="display: flex; gap: .5rem">
-                <button onclick="window.cube.rotateFront('clockwise'); window.repaint();">rotate front (clockwise)</button>
-                <button onclick="window.cube.rotateFront('counterclockwise'); window.repaint();">rotate front (counterclockwise)</button>
-                <button onclick="window.cube.rotateBack('clockwise'); window.repaint();">rotate back (clockwise)</button>
-                <button onclick="window.cube.rotateBack('counterclockwise'); window.repaint();">rotate back (counterclockwise)</button>
-            </div>
-            <div style="display: flex; gap: .5rem">
-                <button onclick="window.cube.rotateLeft('clockwise'); window.repaint();">rotate left (clockwise)</button>
-                <button onclick="window.cube.rotateLeft('counterclockwise'); window.repaint();">rotate left (counterclockwise)</button>
-                <button onclick="window.cube.rotateRight('clockwise'); window.repaint();">rotate right (clockwise)</button>
-                <button onclick="window.cube.rotateRight('counterclockwise'); window.repaint();">rotate right (counterclockwise)</button>
-            </div>
-            <br/>
-            <div style="display: flex; gap: .5rem">
-                <input id="moves" type="number" placeholder="moves, default = 25"/>
-                <button onclick="window.cube.scramble(document.getElementById('moves').value || undefined); window.repaint();">scramble</button>
-            </div>
-            <div style="display: flex; gap: .5rem">
-                <input id="sequence" placeholder="move sequence, e.g. D B U B2 R'" style="width: 15rem"/>
-                <button onclick="window.cube.applyMoves(document.getElementById('sequence').value || undefined); window.repaint();">apply</button>
-            </div>
-            <br/>
-            <small>rubiks@1.0.0 &mdash; (c) Antoni Kępiński 2022</small>
-        </div>
-    </main>
+	<main style="display: grid; gap: 3rem">
+		<div style="display: flex; justify-content: center; align-items: center">
+			<div>
+				<div style="display: flex; flex-direction: column; align-items: center;">
+					<span id="left" style="display: flex; flex-direction: column; transform: translate(-150%, 189%)"></span>
+					<span id="up" style="display: flex; flex-direction: column; transform: rotate(44deg) skew(329deg, 329deg) scale3d(0.9, 0.9, 1) translate(47%, 60%)"></span>
+					<div style="display: flex;">
+						<span id="front" style="display: flex; flex-direction: column; transform: skew(360deg, 15deg)"></span>
+						<span id="right" style="display: flex; flex-direction: column; transform: skew(360deg, 346deg)"></span>
+					</div>
+				</div>
+				<span id="down" style="display: flex; flex-direction: column; transform: skew(360deg, 14deg) translateY(17%)"></span>
+			</div>
+			<span id="back" style="display: flex; flex-direction: column; transform: translate(0%, 37%)"></span>
+		</div>
+		<div style="display: grid; justify-content: center; gap: .5rem">
+			<div style="display: flex; justify-content: space-between; align-items: center; gap: .5rem">
+				<span>is solved? <b id="isSolved">unknown</b></span>
+				<button onclick="navigator.clipboard.writeText(window.cube.emoji);" style="width: fit-content">copy as emoji</button>
+			</div>
+			<textarea id="history" disabled placeholder="<empty history>" style="height: 5rem; resize: none"></textarea>
+			<div style="display: flex; justify-content: space-between">
+				<button onclick="window.cube.moveFront(); window.repaint();">move front</button>
+				<button onclick="window.cube.moveBack(); window.repaint();">move back</button>
+				<button onclick="window.cube.moveRight(); window.repaint();">move right</button>
+				<button onclick="window.cube.moveLeft(); window.repaint();">move left</button>
+			</div>
+			<div style="display: flex; justify-content: space-between; gap: .5rem">
+				<button onclick="window.cube.rotateUp('clockwise'); window.repaint();">rotate up (clockwise)</button>
+				<button onclick="window.cube.rotateUp('counterclockwise'); window.repaint();">rotate up (counterclockwise)</button>
+			</div>
+			<div style="display: flex; justify-content: space-between; gap: .5rem">
+				<button onclick="window.cube.rotateDown('clockwise'); window.repaint();">rotate down (clockwise)</button>
+				<button onclick="window.cube.rotateDown('counterclockwise'); window.repaint();">rotate down (counterclockwise)</button>
+			</div>
+			<div style="display: flex; justify-content: space-between; gap: .5rem">
+				<button onclick="window.cube.rotateFront('clockwise'); window.repaint();">rotate front (clockwise)</button>
+				<button onclick="window.cube.rotateFront('counterclockwise'); window.repaint();">rotate front (counterclockwise)</button>
+			</div>
+			<div style="display: flex; justify-content: space-between; gap: .5rem">
+				<button onclick="window.cube.rotateBack('clockwise'); window.repaint();">rotate back (clockwise)</button>
+				<button onclick="window.cube.rotateBack('counterclockwise'); window.repaint();">rotate back (counterclockwise)</button>
+			</div>
+			<div style="display: flex; justify-content: space-between; gap: .5rem">
+				<button onclick="window.cube.rotateLeft('clockwise'); window.repaint();">rotate left (clockwise)</button>
+				<button onclick="window.cube.rotateLeft('counterclockwise'); window.repaint();">rotate left (counterclockwise)</button>
+			</div>
+			<div style="display: flex; justify-content: space-between; gap: .5rem">
+				<button onclick="window.cube.rotateRight('clockwise'); window.repaint();">rotate right (clockwise)</button>
+				<button onclick="window.cube.rotateRight('counterclockwise'); window.repaint();">rotate right (counterclockwise)</button>
+			</div>
+			<div style="display: flex; justify-content: space-between; gap: .5rem">
+				<input id="moves" type="number" placeholder="moves, default = 25" style="width: 100%"/>
+				<button onclick="window.customScramble();">scramble</button>
+			</div>
+			<label style="width: 100%; display: flex; gap: .25rem; align-items: center;">
+				<input id="useSecure" type="checkbox"/>
+				<span style="font-size: .85rem">use secure random number generator</span>
+			</label>
+			<div style="display: flex; justify-content: space-between; gap: .5rem">
+				<input id="sequence" placeholder="move sequence, e.g. D B U B2 R'" style="width: 100%"/>
+				<button onclick="window.cube.applyMoves(document.getElementById('sequence').value || undefined); window.repaint();">apply</button>
+			</div>
+			<br/>
+			<small>rubiks@1.0.0 &mdash; (c) Antoni Kępiński 2022</small>
+		</div>
+	</main>
 </body>
 <script async type="module">
-    import Cube from './dist/index.js';
+	import Cube from './dist/index.js';
 
-    const cube = new Cube();
+	const cube = new Cube();
 
-    window.cube = cube;
+	window.cube = cube;
 
-    function repaint() {
-        document.getElementById('history').value = cube.history.join(' ');
+	console.log('The API is available at window.cube. Use window.repaint() to update the page.')
 
-        document.getElementById('up').innerHTML = '';
+	function repaint() {
+		document.getElementById('isSolved').textContent = cube.isSolved;
+		document.getElementById('history').value = cube.history.join(' ');
 
-        for (const row of cube.sides.up) {
-            document.getElementById('up').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-        }
+		document.getElementById('up').innerHTML = '';
 
-        document.getElementById('front').innerHTML = '';
+		for (const row of cube.sides.up) {
+			document.getElementById('up').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
+		}
 
-        for (const row of cube.sides.front) {
-            document.getElementById('front').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-        }
+		document.getElementById('front').innerHTML = '';
 
-        document.getElementById('right').innerHTML = '';
+		for (const row of cube.sides.front) {
+			document.getElementById('front').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
+		}
 
-        for (const row of cube.sides.right) {
-            document.getElementById('right').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-        }
+		document.getElementById('right').innerHTML = '';
 
-        document.getElementById('down').innerHTML = '';
+		for (const row of cube.sides.right) {
+			document.getElementById('right').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
+		}
 
-        for (const row of cube.sides.down) {
-            document.getElementById('down').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-        }
+		document.getElementById('down').innerHTML = '';
 
-        document.getElementById('left').innerHTML = '';
+		for (const row of cube.sides.down) {
+			document.getElementById('down').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
+		}
 
-        for (const row of cube.sides.left) {
-            document.getElementById('left').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-        }
+		document.getElementById('left').innerHTML = '';
 
-        document.getElementById('back').innerHTML = '';
+		for (const row of cube.sides.left) {
+			document.getElementById('left').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
+		}
 
-        for (const row of cube.sides.back) {
-            document.getElementById('back').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-        }
-    }
+		document.getElementById('back').innerHTML = '';
 
-    window.repaint = repaint;
+		for (const row of cube.sides.back) {
+			document.getElementById('back').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
+		}
+	}
 
-    repaint();
+	window.customScramble = () => {
+		const moves = document.getElementById('moves').value || undefined;
+		const useSecure = document.getElementById('useSecure').checked;
+
+		const secureRandomNumberGenerator = max => {
+			const randomBuffer = new Uint32Array(1);
+
+			window.crypto.getRandomValues(randomBuffer);
+
+			let randomNumber = randomBuffer[0] / (0xffffffff + 1);
+
+			return Math.floor(randomNumber * max);
+		};
+
+		window.cube.scramble(moves, useSecure ? secureRandomNumberGenerator : undefined);
+		window.repaint();
+	};
+
+	window.repaint = repaint;
+
+	repaint();
 </script>
 </html>

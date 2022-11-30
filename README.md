@@ -14,9 +14,10 @@
     - Front, back (clockwise and counterclockwise)
     - Left, right (clockwise and counterclockwise)
 - Scrambling
-    - Pseudorandom scramble
+    - Ability to use a custom random number generator
     - Scramble sequence interpretation, e.g. `D B U B2 L F' R L`
 - Emoji representation
+- Move history
 
 ## Roadmap
 
@@ -34,7 +35,7 @@
 - [ ] Performance optimization
 - [ ] Benchmarks
 - [x] Drop `immer` for 0 dependencies
-- [ ] Truly random scrambling (cross-platform and/or customizable)
+- [x] Truly random scrambling (cross-platform and/or customizable)
 
 ### License
 

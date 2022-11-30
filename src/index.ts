@@ -1,6 +1,6 @@
-import {type Sides, Directions, RotationType} from './types.js';
-import {INITIAL_STATE} from './constants.js';
-import {rotateSideLeft, rotateSideRight, updateSideRow, sidesToEmoji} from './utils/index.js';
+import {type Sides, Directions, RotationType, type RotationOptions} from './types.js';
+import {DEFAULT_ROTATION_OPTIONS, INITIAL_STATE} from './constants.js';
+import {rotateSideLeft, rotateSideRight, updateSideRow, sidesToEmoji, simplifyHistory} from './utils/index.js';
 
 const {LEFT, RIGHT, FRONT, BACK} = Directions;
 const {CLOCKWISE, COUNTERCLOCKWISE} = RotationType;
@@ -23,6 +23,10 @@ class Cube {
 				this.rotateUp(CLOCKWISE);
 				this.rotateUp(CLOCKWISE);
 			},
+			'U2\'': () => {
+				this.rotateUp(COUNTERCLOCKWISE);
+				this.rotateUp(COUNTERCLOCKWISE);
+			},
 			'D': () => {
 				this.rotateDown(CLOCKWISE);
 			},
@@ -32,6 +36,10 @@ class Cube {
 			'D2': () => {
 				this.rotateDown(CLOCKWISE);
 				this.rotateDown(CLOCKWISE);
+			},
+			'D2\'': () => {
+				this.rotateDown(COUNTERCLOCKWISE);
+				this.rotateDown(COUNTERCLOCKWISE);
 			},
 			'F': () => {
 				this.rotateFront(CLOCKWISE);
@@ -43,6 +51,10 @@ class Cube {
 				this.rotateFront(CLOCKWISE);
 				this.rotateFront(CLOCKWISE);
 			},
+			'F2\'': () => {
+				this.rotateFront(COUNTERCLOCKWISE);
+				this.rotateFront(COUNTERCLOCKWISE);
+			},
 			'B': () => {
 				this.rotateBack(CLOCKWISE);
 			},
@@ -52,6 +64,10 @@ class Cube {
 			'B2': () => {
 				this.rotateBack(CLOCKWISE);
 				this.rotateBack(CLOCKWISE);
+			},
+			'B2\'': () => {
+				this.rotateBack(COUNTERCLOCKWISE);
+				this.rotateBack(COUNTERCLOCKWISE);
 			},
 			'L': () => {
 				this.rotateLeft(CLOCKWISE);
@@ -63,6 +79,10 @@ class Cube {
 				this.rotateLeft(CLOCKWISE);
 				this.rotateLeft(CLOCKWISE);
 			},
+			'L2\'': () => {
+				this.rotateLeft(COUNTERCLOCKWISE);
+				this.rotateLeft(COUNTERCLOCKWISE);
+			},
 			'R': () => {
 				this.rotateRight(CLOCKWISE);
 			},
@@ -72,6 +92,10 @@ class Cube {
 			'R2': () => {
 				this.rotateRight(CLOCKWISE);
 				this.rotateRight(CLOCKWISE);
+			},
+			'R2\'': () => {
+				this.rotateRight(COUNTERCLOCKWISE);
+				this.rotateRight(COUNTERCLOCKWISE);
 			}
 		};
 		this.#moveHistory = [];
@@ -155,7 +179,7 @@ class Cube {
 		this.#move(BACK);
 	}
 
-	rotateUp(type: RotationType) {
+	rotateUp(type: RotationType, {ignoreHistory}: RotationOptions = DEFAULT_ROTATION_OPTIONS) {
 		const {up, front, back, left, right} = this.#state;
 
 		switch (type) {
@@ -169,7 +193,7 @@ class Cube {
 				right: updateSideRow(right, back, 0),
 			};
 
-			this.#moveHistory.push('U');
+			!ignoreHistory && this.#moveHistory.push('U');
 			break;
 		}
 
@@ -183,7 +207,7 @@ class Cube {
 				right: updateSideRow(right, front, 0),
 			};
 
-			this.#moveHistory.push('U\'');
+			!ignoreHistory && this.#moveHistory.push('U\'');
 			break;
 		}
 
@@ -193,7 +217,7 @@ class Cube {
 		}
 	}
 
-	rotateDown(type: RotationType) {
+	rotateDown(type: RotationType, {ignoreHistory}: RotationOptions = DEFAULT_ROTATION_OPTIONS) {
 		const {down, front, back, left, right} = this.#state;
 
 		switch (type) {
@@ -207,7 +231,7 @@ class Cube {
 				right: updateSideRow(right, front, 2),
 			};
 
-			this.#moveHistory.push('D');
+			!ignoreHistory && this.#moveHistory.push('D');
 			break;
 		}
 
@@ -221,7 +245,7 @@ class Cube {
 				right: updateSideRow(right, back, 2),
 			};
 
-			this.#moveHistory.push('D\'');
+			!ignoreHistory && this.#moveHistory.push('D\'');
 			break;
 		}
 
@@ -231,23 +255,23 @@ class Cube {
 		}
 	}
 
-	rotateFront(type: RotationType) {
+	rotateFront(type: RotationType, {ignoreHistory}: RotationOptions = DEFAULT_ROTATION_OPTIONS) {
 		switch (type) {
 		case CLOCKWISE: {
 			this.moveFront();
-			this.rotateDown(CLOCKWISE);
+			this.rotateDown(CLOCKWISE, {ignoreHistory: true});
 			this.moveBack();
 
-			this.#moveHistory.push('F');
+			!ignoreHistory && this.#moveHistory.push('F');
 			break;
 		}
 
 		case COUNTERCLOCKWISE: {
 			this.moveFront();
-			this.rotateDown(COUNTERCLOCKWISE);
+			this.rotateDown(COUNTERCLOCKWISE, {ignoreHistory: true});
 			this.moveBack();
 
-			this.#moveHistory.push('F\'');
+			!ignoreHistory && this.#moveHistory.push('F\'');
 			break;
 		}
 
@@ -261,7 +285,7 @@ class Cube {
 		switch (type) {
 		case CLOCKWISE: {
 			this.moveFront();
-			this.rotateUp(CLOCKWISE);
+			this.rotateUp(CLOCKWISE, {ignoreHistory: true});
 			this.moveBack();
 
 			this.#moveHistory.push('B');
@@ -270,7 +294,7 @@ class Cube {
 
 		case COUNTERCLOCKWISE: {
 			this.moveFront();
-			this.rotateUp(COUNTERCLOCKWISE);
+			this.rotateUp(COUNTERCLOCKWISE, {ignoreHistory: true});
 			this.moveBack();
 
 			this.#moveHistory.push('B\'');
@@ -287,7 +311,7 @@ class Cube {
 		switch (type) {
 		case CLOCKWISE: {
 			this.moveLeft();
-			this.rotateFront(CLOCKWISE);
+			this.rotateFront(CLOCKWISE, {ignoreHistory: true});
 			this.moveRight();
 
 			this.#moveHistory.push('L');
@@ -296,7 +320,7 @@ class Cube {
 
 		case COUNTERCLOCKWISE: {
 			this.moveLeft();
-			this.rotateFront(COUNTERCLOCKWISE);
+			this.rotateFront(COUNTERCLOCKWISE, {ignoreHistory: true});
 			this.moveRight();
 
 			this.#moveHistory.push('L\'');
@@ -313,7 +337,7 @@ class Cube {
 		switch (type) {
 		case CLOCKWISE: {
 			this.moveRight();
-			this.rotateFront(CLOCKWISE);
+			this.rotateFront(CLOCKWISE, {ignoreHistory: true});
 			this.moveLeft();
 
 			this.#moveHistory.push('R');
@@ -322,7 +346,7 @@ class Cube {
 
 		case COUNTERCLOCKWISE: {
 			this.moveRight();
-			this.rotateFront(COUNTERCLOCKWISE);
+			this.rotateFront(COUNTERCLOCKWISE, {ignoreHistory: true});
 			this.moveLeft();
 
 			this.#moveHistory.push('R\'');
@@ -350,12 +374,16 @@ class Cube {
 		}
 	}
 
-	scramble(amount = 25) {
+	#getRandomNumber(max: number) {
+		return (Math.random() * max) | 0;
+	}
+
+	scramble(amount = 25, randomNumberGenerator: (max: number) => number = this.#getRandomNumber) {
 		const allowedMoves = Object.keys(this.#moveAllowlist);
 		const moves: string[] = [];
 
 		while (amount--) {
-			moves.push(allowedMoves[(Math.random() * allowedMoves.length) | 0]);
+			moves.push(allowedMoves[randomNumberGenerator(allowedMoves.length)]);
 		}
 
 		this.applyMoves(moves);
@@ -366,7 +394,11 @@ class Cube {
 	}
 
 	get history() {
-		return this.#moveHistory;
+		return simplifyHistory(this.#moveHistory);
+	}
+
+	get isSolved() {
+		
 	}
 }
 

@@ -35,3 +35,7 @@ export enum RotationType {
 	CLOCKWISE = 'clockwise',
 	COUNTERCLOCKWISE = 'counterclockwise',
 }
+
+export type RotationOptions = {
+	ignoreHistory: boolean;
+}
