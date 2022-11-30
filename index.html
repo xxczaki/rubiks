@@ -24,19 +24,8 @@
 	</head>
 <body>
 	<main style="display: grid; gap: 3rem">
-		<div style="display: flex; justify-content: center; align-items: center">
-			<div>
-				<div style="display: flex; flex-direction: column; align-items: center;">
-					<span id="left" style="display: flex; flex-direction: column; transform: translate(-150%, 189%)"></span>
-					<span id="up" style="display: flex; flex-direction: column; transform: rotate(44deg) skew(329deg, 329deg) scale3d(0.9, 0.9, 1) translate(47%, 60%)"></span>
-					<div style="display: flex;">
-						<span id="front" style="display: flex; flex-direction: column; transform: skew(360deg, 15deg)"></span>
-						<span id="right" style="display: flex; flex-direction: column; transform: skew(360deg, 346deg)"></span>
-					</div>
-				</div>
-				<span id="down" style="display: flex; flex-direction: column; transform: skew(360deg, 14deg) translateY(17%)"></span>
-			</div>
-			<span id="back" style="display: flex; flex-direction: column; transform: translate(0%, 37%)"></span>
+		<div style="display: flex; gap: 1rem; justify-content: center">
+			<canvas id="canvas" height="180"/>
 		</div>
 		<div style="display: grid; justify-content: center; gap: .5rem">
 			<div style="display: flex; justify-content: space-between; align-items: center; gap: .5rem">
@@ -100,45 +89,359 @@
 
 	console.log('The API is available at window.cube. Use window.repaint() to update the page.')
 
+	const ctx = document.getElementById('canvas').getContext('2d');
+	ctx.strokeStyle = 'black';
+
 	function repaint() {
 		document.getElementById('isSolved').textContent = cube.isSolved;
 		document.getElementById('history').value = cube.history.join(' ');
 
-		document.getElementById('up').innerHTML = '';
+		ctx.setTransform(1, 0, -1, 1, 0, 0);
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.up[0][0];
+		ctx.rect(132, 45, 15, 10);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.up[0][1];
+		ctx.rect(147, 45, 15, 10);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.up[0][2];
+		ctx.rect(162, 45, 15, 10);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 
-		for (const row of cube.sides.up) {
-			document.getElementById('up').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-		}
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.up[1][0];
+		ctx.rect(132, 55, 15, 10);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.up[1][1];
+		ctx.rect(147, 55, 15, 10);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.up[1][2];
+		ctx.rect(162, 55, 15, 10);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 
-		document.getElementById('front').innerHTML = '';
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.up[2][0];
+		ctx.rect(132, 65, 15, 10);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.up[2][1];
+		ctx.rect(147, 65, 15, 10);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.up[2][2];
+		ctx.rect(162, 65, 15, 10);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 
-		for (const row of cube.sides.front) {
-			document.getElementById('front').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-		}
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.left[0][0];
+		ctx.rect(12, 75, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.left[0][1];
+		ctx.rect(27, 75, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.left[0][2];
+		ctx.rect(42, 75, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 
-		document.getElementById('right').innerHTML = '';
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.left[1][0];
+		ctx.rect(12, 90, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.left[1][1];
+		ctx.rect(27, 90, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.left[1][2];
+		ctx.rect(42, 90, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 
-		for (const row of cube.sides.right) {
-			document.getElementById('right').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-		}
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.left[2][0];
+		ctx.rect(12, 105, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.left[2][1];
+		ctx.rect(27, 105, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.left[2][2];
+		ctx.rect(42, 105, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 
-		document.getElementById('down').innerHTML = '';
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.front[0][0];
+		ctx.rect(57, 75, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.front[0][1];
+		ctx.rect(72, 75, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.front[0][2];
+		ctx.rect(87, 75, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 
-		for (const row of cube.sides.down) {
-			document.getElementById('down').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-		}
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.front[1][0];
+		ctx.rect(57, 90, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.front[1][1];
+		ctx.rect(72, 90, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.front[1][2];
+		ctx.rect(87, 90, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.front[2][0];
+		ctx.rect(57, 105, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 
-		document.getElementById('left').innerHTML = '';
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.front[2][1];
+		ctx.rect(72, 105, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.front[2][2];
+		ctx.rect(87, 105, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 
-		for (const row of cube.sides.left) {
-			document.getElementById('left').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-		}
 
-		document.getElementById('back').innerHTML = '';
+		ctx.setTransform(1, -1, 0, 1, 0, 0);
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.right[0][0];
+		ctx.rect(102, 177, 10, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.right[0][1];
+		ctx.rect(112, 177, 10, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.right[0][2];
+		ctx.rect(122, 177, 10, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 
-		for (const row of cube.sides.back) {
-			document.getElementById('back').innerHTML += `<div style="margin-top: -8px">${row.join('')}</div>`
-		}
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.right[1][0];
+		ctx.rect(102, 192, 10, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.right[1][1];
+		ctx.rect(112, 192, 10, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.right[1][2];
+		ctx.rect(122, 192, 10, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.right[2][0];
+		ctx.rect(102, 207, 10, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.right[2][1];
+		ctx.rect(112, 207, 10, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.right[2][2];
+		ctx.rect(122, 207, 10, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.back[0][0];
+		ctx.rect(132, 45, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.back[0][1];
+		ctx.rect(147, 45, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.back[0][2];
+		ctx.rect(162, 45, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.back[1][0];
+		ctx.rect(132, 60, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.back[1][1];
+		ctx.rect(147, 60, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.back[1][2];
+		ctx.rect(162, 60, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.back[2][0];
+		ctx.rect(132, 75, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.back[2][1];
+		ctx.rect(147, 75, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.back[2][2];
+		ctx.rect(162, 75, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.down[0][0];
+		ctx.rect(57, 120, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.down[0][1];
+		ctx.rect(72, 120, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.down[0][2];
+		ctx.rect(87, 120, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.down[1][0];
+		ctx.rect(57, 135, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.down[1][1];
+		ctx.rect(72, 135, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.down[1][2];
+		ctx.rect(87, 135, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.down[1][0];
+		ctx.rect(57, 150, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.down[1][1];
+		ctx.rect(72, 150, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = cube.sides.down[1][2];
+		ctx.rect(87, 150, 15, 15);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 	}
 
 	window.customScramble = () => {

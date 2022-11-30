@@ -1,11 +1,18 @@
 export enum Colors {
-	RED = '🟥',
-	GREEN = '🟩',
-	BLUE = '🟦',
-	ORANGE = '🟧',
-	YELLOW = '🟨',
-	WHITE = '⬜',
+	RED = 'red',
+	GREEN = 'green',
+	BLUE = 'blue',
+	ORANGE = 'orange',
+	YELLOW = 'yellow',
+	WHITE = 'white',
 }
+
+// RED = '🟥',
+// GREEN = '🟩',
+// BLUE = '🟦',
+// ORANGE = '🟧',
+// YELLOW = '🟨',
+// WHITE = '⬜',
 
 type Piece = Colors;
 type Row = [Piece, Piece, Piece];

@@ -1,4 +1,4 @@
-import {Colors, type ScrambleOptions, type RotationOptions, type Sides} from './types.js';
+import {Colors, type RotationOptions, type Sides} from './types.js';
 
 const {RED, GREEN, BLUE, ORANGE, YELLOW, WHITE} = Colors;
 
